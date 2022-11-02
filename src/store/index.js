@@ -13,6 +13,7 @@ export default new Vuex.Store({
   state: {
     movies: null,
     play: null,
+    device: "http://192.168.1.5:52323/dmr.xml"
   },
 
   getters: {
@@ -40,7 +41,7 @@ export default new Vuex.Store({
         const response = await axios.post(`http://${window.location.host.split(':')[0]}:5000/play`,
         {
           "title": movie.title,
-          "device": "http://192.168.1.65:52323/dmr.xml",
+          "device": state.device,
           "file_path": movie.files[0].file,
           "videoUrl":movie.files[0].url
         }
@@ -52,10 +53,9 @@ export default new Vuex.Store({
     },
     async playPause({commit, state}){
       try {
-        //console.log(movie.files[0].url)
         const response = await axios.post(`http://${window.location.host.split(':')[0]}:5000/playPause`,
         {
-          "device": "http://192.168.1.65:52323/dmr.xml",
+          "device": state.device,
         }
         );
         //commit("play", response.data)
